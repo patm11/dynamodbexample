@@ -1,0 +1,36 @@
+{
+  "name": "dynamodbexample",
+  "version": "1.0.0",
+  "description": "Example app that uses DynamoDB",
+  "main": "build/Release/index.js",
+  "scripts": {
+    "clean": "rm -r build",
+    "build": "tsc",
+    "test": "jest --notify",
+    "start:docker": "docker-compose up -d",
+    "stop:docker": "docker-compose down",
+    "start:express": "node build/Release/index.js",
+    "start": "npm run-script start:docker && npm run-script build && npm run-script start:express"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patm11/dynamodbexample.git"
+  },
+  "author": "patm11",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patm11/dynamodbexample/issues"
+  },
+  "homepage": "https://github.com/patm11/dynamodbexample#readme",
+  "dependencies": {
+    "aws-sdk": "^2.828.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "typescript": "^4.1.3",
+    "jest": "^26.6.3",
+    "@types/jest": "^26.0.20",
+    "ts-jest": "^26.5.4"
+  }
+}
