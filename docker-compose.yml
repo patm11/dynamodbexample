@@ -5,3 +5,7 @@ services:
     image: amazon/dynamodb-local
     ports:
       - "8000:8000"
+  example:
+    ports:
+      - "3000:3000"
+    build: .

@@ -6,6 +6,12 @@ export interface DynamoOptionsConfig {
     defaultValue: string
 }
 
+/**
+ * Gets a value from process.env or the given default value
+ *
+ * @param {DynamoOptionsConfig} config the options config
+ * @returns {string} the config value
+ */
 export const getConfigValue = (config: DynamoOptionsConfig): string => {
     const { propertyName, defaultValue } = config;
     let rVal = process.env[propertyName];

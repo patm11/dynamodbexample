@@ -1,4 +1,4 @@
-import { DynamoOptionsConfig, getConfigValue } from "./exampleDynamoOptions";
+import { DynamoOptionsConfig, getConfigValue } from "../../src/dynamodb/exampleDynamoOptions";
 
 describe("Test the get config function", () => {
 

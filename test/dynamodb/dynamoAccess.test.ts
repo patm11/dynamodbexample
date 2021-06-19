@@ -1,11 +1,11 @@
-import { putItem } from "./dynamoAccess";
-import { Item } from "../items/item";
-import { exampleDynamoClient } from "./exampleDynamoClient";
+import { putItem } from "../../src/dynamodb/dynamoAccess";
+import { Item } from "../../src/items/item";
+import { exampleDynamoClient } from "../../src/dynamodb/exampleDynamoClient";
 import { mocked } from "ts-jest/utils";
 import { PutItemInput } from "aws-sdk/clients/dynamodb";
-import { TABLE_NAME } from "../constants";
+import { TABLE_NAME } from "../../src/constants";
 
-jest.mock("./exampleDynamoClient");
+jest.mock("../../src/dynamodb/exampleDynamoClient");
 const dynamoClientMock = mocked(exampleDynamoClient);
 
 describe("Dynamo Access tests", () => {

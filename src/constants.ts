@@ -1,7 +1,7 @@
 import {
     AttributeDefinition,
     AttributeDefinitions, AttributeValue,
-    CreateTableInput,
+    CreateTableInput, GetItemInput,
     KeySchema,
     KeySchemaElement, PutItemInput, PutItemInputAttributeMap,
 } from "aws-sdk/clients/dynamodb";
@@ -76,4 +76,14 @@ export const BUILD_PUT_ITEM_INPUT = (id: string, date: Date): PutItemInput => {
         TableName: TABLE_NAME,
         Item: BUILD_ATTRIBUTE_MAP(BUILD_ID_ATTRIBUTE_VALUE(id), BUILD_DATE_ATTRIBUTE_VALUE(date))
     };
+}
+
+export const BUILD_GET_ITEM_INPUT = (id: string, date: Date): GetItemInput => {
+    return {
+        TableName: TABLE_NAME,
+        Key: {
+            [ATTRIBUTE_ID]: BUILD_ID_ATTRIBUTE_VALUE(id),
+            [ATTRIBUTE_DATE]: BUILD_DATE_ATTRIBUTE_VALUE(date)
+        }
+    }
 }

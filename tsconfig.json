@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./build/Release",
-    "rootDir": "./src",
+    "rootDirs": ["./src", "./test", "./functional"],
     "allowSyntheticDefaultImports": true
   }
 }
