@@ -9,22 +9,26 @@ const exampleAppMock = mocked(exampleApp);
 const reqHandlersMock = mocked(requestHandlers);
 
 describe("Controller tests", () => {
-    beforeEach(() => {
-       exampleAppMock.mockClear()
-       reqHandlersMock.getItemGET.mockClear();
-       reqHandlersMock.createItemPOST.mockClear();
-       reqHandlersMock.getItemGET.mockClear();
-    });
+  beforeEach(() => {
+    exampleAppMock.mockClear();
+    reqHandlersMock.getItemGET.mockClear();
+    reqHandlersMock.createItemPOST.mockClear();
+    reqHandlersMock.getItemGET.mockClear();
+  });
 
-    it("Expected endpoints are setup", () => {
-        setupEndpoints();
+  it("Expected endpoints are setup", () => {
+    setupEndpoints();
 
-        console.log(JSON.stringify(new Date().getDate()));
+    console.log(JSON.stringify(new Date().getDate()));
 
-        expect(exampleAppMock.get)
-            .toBeCalledWith("/", expect(reqHandlersMock.appHeartBeatGET).toBeCalled());
+    expect(exampleAppMock.get).toBeCalledWith(
+      "/",
+      expect(reqHandlersMock.appHeartBeatGET).toBeCalled()
+    );
 
-        expect(exampleAppMock.post)
-            .toBeCalledWith("/item", expect(reqHandlersMock.createItemPOST).toBeCalled());
-    });
+    expect(exampleAppMock.post).toBeCalledWith(
+      "/item",
+      expect(reqHandlersMock.createItemPOST).toBeCalled()
+    );
+  });
 });

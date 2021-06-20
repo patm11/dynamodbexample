@@ -16,7 +16,7 @@ export const getConfigValue = (config: DynamoOptionsConfig): string => {
     const { propertyName, defaultValue } = config;
     let rVal = process.env[propertyName];
 
-    if(rVal == undefined) {
+    if(rVal === undefined) {
         rVal = defaultValue;
     }
 

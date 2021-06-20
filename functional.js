@@ -1,34 +1,33 @@
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
-async function functionalTestHandler() {
-    try {
-        // start the app and run the functional tests
-        // TODO: express starting sort of "locks" the process (you do want a server to run until you give it a stop command afterall)
-        const { stdout, stderr } = await exec("yarn start:docker")
+async function functionalTestHandler () {
+  try {
+    // start the app and run the functional tests
+    const startDockerOutput = await exec("yarn start:docker");
+    console.info(startDockerOutput);
+    console.info("Intentional pause to allow docker-compose to complete");
+    await new Promise(resolve => { setTimeout(resolve, 3000); });
+    const functionalTestOutput = await exec("yarn test:functional");
+    console.info(functionalTestOutput);
+  } catch (error) {
+    console.log(`Error during functional test exec: ${JSON.stringify(error)}`);
+  } finally {
+    console.info("Shutting down docker compose...");
+    const { stdout, stderr } = await exec("yarn stop:docker");
 
-        if(stderr) {
-            console.error(JSON.stringify(stderr));
-        } else {
-            console.info(JSON.stringify(stdout));
-        }
-    } catch (error) {
-        console.log(JSON.stringify(error));
-    } finally {
-        const { stdout, stderr } = await exec("yarn docker:stop");
-
-        if(stderr) {
-            console.error(JSON.stringify(stderr));
-        } else {
-            console.info(JSON.stringify(stdout));
-        }
+    if (stderr) {
+      console.error(JSON.stringify(stderr));
+    } else {
+      console.info(JSON.stringify(stdout));
     }
+  }
 }
 
 functionalTestHandler()
-    .then(() => {
-        console.info("Successful functional test run");
-})
-    .catch(() => {
-        console.error("Unsuccessful functional test run");
-});
+  .then(() => {
+    console.info("Successful functional test run");
+  })
+  .catch(() => {
+    console.error("Unsuccessful functional test run");
+  });
