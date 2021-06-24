@@ -5,3 +5,12 @@ services:
     image: amazon/dynamodb-local
     ports:
       - "8000:8000"
+  example:
+    build: .
+    depends_on:
+      - dynamodb
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DYNAMODB_URL=http://dynamodb:8000
