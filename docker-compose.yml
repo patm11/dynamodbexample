@@ -6,16 +6,11 @@ services:
     ports:
       - "8000:8000"
   example:
-    image: node:14-alpine3.13
+    build: .
     depends_on:
       - dynamodb
-    user: "node"
     ports:
       - "3000:3000"
-    working_dir: /app
     environment:
       - NODE_ENV=production
       - DYNAMODB_URL=http://dynamodb:8000
-    volumes:
-      - ./:/app
-    command: "npm run-script start:express"

@@ -9,6 +9,8 @@ export const setupEndpoints = (): Promise<void> => {
       exampleApp.get("/", requestHandlers.appHeartBeatGET());
       // create item endpoint - create items in DynamoDB
       exampleApp.post("/item", requestHandlers.createItemPOST());
+      // get item endpoint - get stored items from Dynamo
+      exampleApp.get("/item/:id", requestHandlers.getItemsGET());
 
       success();
     } catch (error) {

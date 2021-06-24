@@ -11,9 +11,8 @@ const reqHandlersMock = mocked(requestHandlers);
 describe("Controller tests", () => {
   beforeEach(() => {
     exampleAppMock.mockClear();
-    reqHandlersMock.getItemGET.mockClear();
+    reqHandlersMock.getItemsGET.mockClear();
     reqHandlersMock.createItemPOST.mockClear();
-    reqHandlersMock.getItemGET.mockClear();
   });
 
   it("Expected endpoints are setup", () => {

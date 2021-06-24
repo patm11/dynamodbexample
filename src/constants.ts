@@ -3,11 +3,11 @@ import {
   AttributeDefinitions,
   AttributeValue,
   CreateTableInput,
-  GetItemInput,
   KeySchema,
   KeySchemaElement,
   PutItemInput,
-  PutItemInputAttributeMap
+  PutItemInputAttributeMap,
+  QueryInput
 } from "aws-sdk/clients/dynamodb";
 
 export const TABLE_NAME: string = "TestTable";
@@ -65,7 +65,7 @@ const BUILD_ID_ATTRIBUTE_VALUE = (id: string): AttributeValue => {
 
 const BUILD_DATE_ATTRIBUTE_VALUE = (date: Date): AttributeValue => {
   return {
-    N: date.getUTCMilliseconds().toString()
+    N: `${new Date(date).getTime()}`
   };
 };
 
@@ -89,12 +89,17 @@ export const BUILD_PUT_ITEM_INPUT = (id: string, date: Date): PutItemInput => {
   };
 };
 
-export const BUILD_GET_ITEM_INPUT = (id: string, date: Date): GetItemInput => {
+export const BUILD_QUERY_INPUT = (id: string): QueryInput => {
   return {
     TableName: TABLE_NAME,
-    Key: {
-      [ATTRIBUTE_ID]: BUILD_ID_ATTRIBUTE_VALUE(id),
-      [ATTRIBUTE_DATE]: BUILD_DATE_ATTRIBUTE_VALUE(date)
-    }
+    ExpressionAttributeNames: {
+      "#id": `${ATTRIBUTE_ID}`,
+      "#date": `${ATTRIBUTE_DATE}`
+    },
+    ExpressionAttributeValues: {
+      ":id": { S: `${id}` },
+      ":date": { N: "0" }
+    },
+    KeyConditionExpression: `#id = :id AND #date > :date`
   };
 };

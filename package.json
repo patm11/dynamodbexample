@@ -2,14 +2,14 @@
   "name": "dynamodbexample",
   "version": "1.0.0",
   "description": "Example app that uses DynamoDB",
-  "main": "build/Release/index.js",
+  "main": "build/Release/src/index.js",
   "scripts": {
     "clean": "rimraf build",
     "build": "yarn clean && tsc",
     "test": "yarn build && jest test/* --notify --coverage",
     "test:functional": "yarn build && jest functional/* --notify",
     "functional": "node functional.js",
-    "start:docker": "docker-compose up -d",
+    "start:docker": "docker-compose build && docker-compose up -d",
     "stop:docker": "docker-compose down",
     "start:express": "node build/Release/src/index.js",
     "start": "yarn build && yarn start:docker"

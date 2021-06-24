@@ -2,8 +2,8 @@
  * Defines dynamo options config
  */
 export interface DynamoOptionsConfig {
-    propertyName: string,
-    defaultValue: string
+  propertyName: string;
+  defaultValue: string;
 }
 
 /**
@@ -13,15 +13,15 @@ export interface DynamoOptionsConfig {
  * @returns {string} the config value
  */
 export const getConfigValue = (config: DynamoOptionsConfig): string => {
-    const { propertyName, defaultValue } = config;
-    let rVal = process.env[propertyName];
+  const { propertyName, defaultValue } = config;
+  let rVal = process.env[propertyName];
 
-    if(rVal === undefined) {
-        rVal = defaultValue;
-    }
+  if (rVal === undefined) {
+    rVal = defaultValue;
+  }
 
-    return rVal;
-}
+  return rVal;
+};
 
 const dynamoDbEndpointConfig: DynamoOptionsConfig = {
   propertyName: "DYNAMODB_URL",
@@ -29,18 +29,18 @@ const dynamoDbEndpointConfig: DynamoOptionsConfig = {
 };
 
 const accessKeyIdConfig: DynamoOptionsConfig = {
-    propertyName: "DYNAMODB_ACCESS_KEY_ID",
-    defaultValue: "dummy"
+  propertyName: "DYNAMODB_ACCESS_KEY_ID",
+  defaultValue: "dummy"
 };
 
 const secretAccessKeyConfig: DynamoOptionsConfig = {
-    propertyName: "DYNAMODB_SECRET_ACCESS_KEY",
-    defaultValue: "dummy"
+  propertyName: "DYNAMODB_SECRET_ACCESS_KEY",
+  defaultValue: "dummy"
 };
 
 const regionConfig: DynamoOptionsConfig = {
-    propertyName: "AWS_REGION",
-    defaultValue: "us-west-2"
+  propertyName: "AWS_REGION",
+  defaultValue: "us-west-2"
 };
 
 const dynamoDbEndpoint = getConfigValue(dynamoDbEndpointConfig);
@@ -49,10 +49,10 @@ const secretAccessKey = getConfigValue(secretAccessKeyConfig);
 const region = getConfigValue(regionConfig);
 
 export const exampleDynamoOptions = {
-    endpoint: dynamoDbEndpoint,
-    credentials: {
-        accessKeyId: accessKeyId,
-        secretAccessKey: secretAccessKey
-    },
-    region: region
-}
+  endpoint: dynamoDbEndpoint,
+  credentials: {
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey
+  },
+  region: region
+};

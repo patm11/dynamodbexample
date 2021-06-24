@@ -1,11 +1,12 @@
 import { RequestHandler } from "express";
-import { putItem } from "../dynamodb/dynamoAccess";
+import { getItems, putItem } from "../dynamodb/dynamoAccess";
 import { exampleLogger } from "../exampleLogger";
+import { Item } from "../items/item";
 
 interface RequestHandlers {
     appHeartBeatGET: () => RequestHandler
     createItemPOST: () => RequestHandler
-    getItemGET: () => RequestHandler
+    getItemsGET: () => RequestHandler
 }
 
 class ExampleRequestHandlers implements RequestHandlers {
@@ -17,20 +18,34 @@ class ExampleRequestHandlers implements RequestHandlers {
   }
 
   createItemPOST (): RequestHandler {
-    return (request, response) => {
+    return async (request, response) => {
       exampleLogger.info(`Create item POST request body: ${JSON.stringify(request.body)}`);
-      putItem(request.body).then(() => {
+      await putItem(request.body as Item).then(() => {
         exampleLogger.info("Successfully added item");
         response.sendStatus(200);
-      }).catch(() => {
+      }).catch((error) => {
+        exampleLogger.error(`Error when handling POSTed item: ${JSON.stringify(error)}`);
         response.sendStatus(500);
       });
     };
   }
 
-  getItemGET (): RequestHandler {
-    return (request, response) => {
+  getItemsGET (): RequestHandler {
+    return async (request, response) => {
       // TODO: parse inputs from the request and send to dynamo access
+      const params = request.params;
+      exampleLogger.info(`Params: ${JSON.stringify(params)}`);
+      if (!params.id) {
+        response.sendStatus(400);
+      }
+
+      const items = await getItems(params.id)
+        .catch((error) => {
+          exampleLogger.error(`Error getting items: ${JSON.stringify(error)}`);
+          response.sendStatus(500);
+        });
+
+      response.send(items);
     };
   }
 }
